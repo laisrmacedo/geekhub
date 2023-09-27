@@ -11,6 +11,7 @@ const Main = styled.main`
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05); 
   box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
