@@ -1,21 +1,33 @@
-import logoLogin from '../assets/logoLogin.png'
 import styled from "styled-components";
 import { useState } from "react";
-import { BASE_URL } from "../App";
 import { useNavigate } from "react-router-dom";
-import { goToPostsPage, goToSignupPage } from "../router/coordinator";
 import { Container } from '../components/Container';
-// import { HorizontalLine, InputForShortText, Radius25Btn } from "../components/styledcomponents";
 // import axios from "axios";
 // import { Footer } from "../components/Footer"
+import logo from "../assets/logo.png"
+import { InputForShortText, Btn } from "../GlobalStyle";
 
-const ContainerLoginPage = styled.div`
-  height: 94%;
-  width: 364px;
+const Content = styled.div`
+  height: 100%;
+  width: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* border: 1px red solid; */
+
+  >figure{
+    height: 25%;
+  }
+  >input{
+    margin-bottom: 8px;
+  }
+  >span{
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: 16px;
+  }
   
   form{
     display: flex;
@@ -36,45 +48,6 @@ const ContainerLoginPage = styled.div`
     height: 142px;
   }
   
-  >p{
-    color: black;
-    font-size: 16px;
-    text-transform: uppercase;
-    font-weight: 100;
-  }
-  
-  .inputs{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width:100%;
-    height: 160px;
-    margin: 60px 0 40px 0;
-    color: #45525B;
-
-    input{
-      margin: 0 auto;
-      font-weight: 400;
-      color: #808080;
-      width: 90%;
-    }
-
-    p{
-      margin: 0 auto;
-      color: red;
-      font-size: 10px;
-    }
-  }
-
-  .login{
-    background: linear-gradient(90deg, #FF6489, #F9B24E);
-  }
-  
-  .signup{
-    background-color: #FFFFFF;
-    border: 1px solid #FE7E02;
-    color: #FE7E02;
-  }
 `
 
 export const Login = () => {
@@ -113,11 +86,33 @@ export const Login = () => {
   // }
 
   return (
-    <>
       <Container>
-        
+        <Content>
+          <figure>
+            <img src={logo}/>
+          </figure>
+          <InputForShortText
+            placeholder="E-mail"
+            required
+            type="text"
+            name="email"
+            value={form.email}
+            onChange={onChangeForm}
+          />
+          <InputForShortText
+            placeholder="Password"
+            required
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={onChangeForm}
+          />
+          <span>
+            <Btn id="signup"> Signup </Btn>
+            <Btn id="login"> Login </Btn>
+          </span>
+        </Content>
+        {/* <Footer /> */}
       </Container>
-      {/* <Footer /> */}
-    </>
   )
 }
