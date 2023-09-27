@@ -6,6 +6,7 @@ import { Container } from '../components/Container';
 // import { Footer } from "../components/Footer"
 import logo from "../assets/logo.png"
 import { InputForShortText, Btn } from "../GlobalStyle";
+import { goToSignup } from "../router/coordinator";
 
 const Content = styled.div`
   height: 100%;
@@ -18,6 +19,9 @@ const Content = styled.div`
 
   >figure{
     height: 25%;
+    img{
+      height: 60%;
+    }
   }
   >input{
     margin-bottom: 8px;
@@ -42,12 +46,7 @@ const Content = styled.div`
     div{
       width: 90%;
     }
-  }
-  
-  img{
-    height: 142px;
-  }
-  
+  }  
 `
 
 export const Login = () => {
@@ -108,7 +107,7 @@ export const Login = () => {
             onChange={onChangeForm}
           />
           <span>
-            <Btn id="signup"> Signup </Btn>
+            <Btn id="signup" onClick={() => goToSignup(navigate)}> Signup </Btn>
             <Btn id="login"> Login </Btn>
           </span>
         </Content>

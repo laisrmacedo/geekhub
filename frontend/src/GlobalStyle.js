@@ -6,10 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
-    font-weight: 500;
-    font-family: 'Open Sans', sans-serif;
-    color: white;
+
     ::-webkit-scrollbar-track {
       background: #FFF; 
     };
@@ -37,6 +34,13 @@ export const Body = styled.div`
   align-items: center;
   padding: 20px 0;
   background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(216,216,216,1) 50%, rgba(240,240,240,1) 100%);
+  overflow-x: hidden;
+  font-family: 'Open Sans', sans-serif;
+  color: #000;
+
+  h1{
+    font-weight: 800;
+  }
 `
 
 export const InputForLongText = styled.textarea`
@@ -65,5 +69,7 @@ export const Btn = styled.button`
   width:  100%;
   height: 50px;
   background-color: #213555;
+  color: #fff;
+  font-weight: 800;
 `
 
