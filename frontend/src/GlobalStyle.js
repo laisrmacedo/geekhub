@@ -26,23 +26,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-export const Body = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(216,216,216,1) 50%, rgba(240,240,240,1) 100%);
-  overflow-x: hidden;
-  font-family: 'Open Sans', sans-serif;
-  color: #000;
-
-  h1{
-    font-weight: 800;
-  }
-`
-
 export const InputForLongText = styled.textarea`
   height: 131px;
   width: 100%;
@@ -68,7 +51,8 @@ export const Btn = styled.button`
   border: none;
   width:  100%;
   height: 50px;
-  background-color: #213555;
+  background:  ${(props) => (props.theme ? '#F9F3EB8a' : '#50677A5a')};
+  /* background-color: ${(props) => (props.theme ? '#213555' : 'red')}; */
   color: #fff;
   font-weight: 800;
 `
