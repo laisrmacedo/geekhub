@@ -2,6 +2,7 @@ import { Container } from '../components/Container';
 import { Header } from '../components/Header';
 import styled from "styled-components";
 import { UserInfo } from '../components/UserInfo';
+import { Btn } from '../GlobalStyle';
 
 const Content = styled.div`
   height: calc(100% - 80px);
@@ -13,8 +14,8 @@ const Content = styled.div`
   section{
     height:100%;
     width: 50%;
-    border-left: 1px solid #F0F0F0;
-    border-right: 1px solid #F0F0F0;
+    border-left: 1px solid #E5E5E5;
+    border-right: 1px solid #E5E5E5;
     padding: 8px 0;
   }
   aside{
@@ -29,9 +30,11 @@ export const Dashboard = () => {
     <Container>
       <Header></Header>
       <Content>
-        <UserInfo/>
+        <aside>
+         <UserInfo/>
+        </aside>
         <section>
-
+          
         </section>
         <aside></aside>
       </Content>

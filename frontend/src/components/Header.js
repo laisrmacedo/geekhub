@@ -2,6 +2,8 @@ import styled from "styled-components";
 import logo from "../assets/logo.png"
 import profileIcon from "../assets/profileIcon.png"
 import themeIcon from "../assets/themeIcon.png"
+import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalContext";
 
 const Content = styled.header`
   height: 80px;
@@ -33,11 +35,13 @@ const Content = styled.header`
 `
 
 export const Header = () => {
+  const { currentTheme, setCurrentTheme} = useContext(GlobalContext)
+
   return(
     <Content>
       <img src={logo}/>
       <figure>
-        <img src={themeIcon}/>
+        <img src={themeIcon} onClick={() => setCurrentTheme(!currentTheme)}/>
         <img src={profileIcon}/>
       </figure>
     </Content>
