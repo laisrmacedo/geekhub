@@ -51,9 +51,9 @@ export const Btn = styled.button`
   border: none;
   width:  100%;
   height: 50px;
-  background:  ${(props) => (props.theme ? '#F9F3EB8a' : '#50677A5a')};
+  /* background:  ${(props) => (props.theme ? '#F9F3EB8a' : '#50677A5a')}; */
   /* background-color: ${(props) => (props.theme ? '#213555' : 'red')}; */
-  color: #fff;
+  /* color: #fff; */
   font-weight: 800;
 `
 
