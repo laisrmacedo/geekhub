@@ -1,4 +1,4 @@
--- Active: 1695927065553@@127.0.0.1@5432@geekhub
+-- Active: 1695933699071@@127.0.0.1@5432@geekhub
 CREATE TABLE users (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     nickname TEXT UNIQUE NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE comments (
   updated_at TEXT NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES users(id)
     ON DELETE CASCADE 
-    ON UPDATE CASCADE 
+    ON UPDATE CASCADE, 
   FOREIGN KEY (post_id) REFERENCES posts(id)
     ON DELETE CASCADE 
     ON UPDATE CASCADE 
@@ -55,7 +55,7 @@ CREATE TABLE post_upvote_downvote (
     vote INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE 
-        ON UPDATE CASCADE 
+        ON UPDATE CASCADE, 
     FOREIGN KEY (post_id) REFERENCES posts(id)
         ON DELETE CASCADE 
         ON UPDATE CASCADE 
@@ -70,7 +70,7 @@ CREATE TABLE comment_upvote_downvote (
     vote INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE 
-        ON UPDATE CASCADE 
+        ON UPDATE CASCADE, 
     FOREIGN KEY (comment_id) REFERENCES comments(id)
         ON DELETE CASCADE 
         ON UPDATE CASCADE 

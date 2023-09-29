@@ -29,9 +29,9 @@ export class BaseDatabase {
   public async createUsersTable(): Promise<void> {
     try {
       const tableExists = await BaseDatabase.connection.schema.hasTable('users');
-      
+
       if (!tableExists) {
-        const filePath = path.join(__dirname, 'users.sql'); // Caminho completo para o arquivo
+        const filePath = path.join(__dirname, 'geekhub.sql'); // Caminho completo para o arquivo
         const sql = fs.readFileSync(filePath, 'utf-8'); // Ler o conteúdo do arquivo
         await BaseDatabase.connection.raw(sql); // Executar o SQL para criar a tabela
         console.log('Tabela "Users" criada com sucesso.');
@@ -46,7 +46,7 @@ export class BaseDatabase {
       const tableExists = await BaseDatabase.connection.schema.hasTable('posts');
       
       if (!tableExists) {
-        const filePath = path.join(__dirname, 'posts.sql'); 
+        const filePath = path.join(__dirname, 'geekhub.sql'); 
         const sql = fs.readFileSync(filePath, 'utf-8');
         await BaseDatabase.connection.raw(sql);
         console.log('Tabela "Posts" criada com sucesso.');
