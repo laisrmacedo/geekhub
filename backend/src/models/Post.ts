@@ -5,6 +5,7 @@ export class Post {
   constructor(
     private id: string, 
     private creatorId: string,
+    private topic: string, 
     private content: string, 
     private upvote: number,
     private downvote: number,
@@ -19,6 +20,13 @@ export class Post {
 
   public getCreatorId():string{
     return this.creatorId
+  }
+
+  public getTopic():string{
+    return this.topic
+  }
+  public setTopic(value: string): void{
+    this.topic = value
   }
 
   public getContent():string{
@@ -70,6 +78,7 @@ export class Post {
     return {
       id: this.id, 
       creator_id: this.creatorId,
+      topic: this.topic, 
       content: this.content, 
       upvote: this.upvote,
       downvote: this.downvote,
@@ -83,6 +92,7 @@ export class Post {
     return {
       id: this.id, 
       creatorId: this.creatorId,
+      topic: this.topic, 
       content: this.content, 
       upvote: this.upvote,
       downvote: this.downvote,

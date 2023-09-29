@@ -15,6 +15,7 @@ DROP TABLE users;
 CREATE TABLE posts (
   id TEXT PRIMARY KEY UNIQUE NOT NULL,
   creator_id TEXT NOT NULL,
+  topic TEXT NOT NULL,
   content TEXT NOT NULL,
   upvote INTEGER NOT NULL,
   downvote INTEGER NOT NULL,

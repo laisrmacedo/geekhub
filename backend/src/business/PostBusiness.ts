@@ -13,6 +13,7 @@ import { TokenManager } from "../services/TokenManager";
 export interface PostBusinessModel {
   id: string,
   creatorId: string,
+  topic: string,
   content: string,
   upvote: number,
   downvote: number,
@@ -72,6 +73,7 @@ export class PostBusiness {
           loggedUser: payload.nickname,
           id: post.id,
           creatorNickname: postCreator.nickname,
+          topic: post.topic,
           content: post.content,
           vote: postVote,
           upvote: post.upvote,
@@ -155,12 +157,17 @@ export class PostBusiness {
   }
 
   public createPost = async (input: CreatePostOutputDTO): Promise<void> => {
-    const { token, content } = input
+    const { token, topic, content } = input
 
     //login ckeck
     const payload = this.tokenManager.getPayload(token)
     if (payload === null) {
       throw new BadRequestError("ERROR: Login failed.")
+    }
+
+    //characters quantity
+    if (topic.length > 80) {
+      throw new BadRequestError("ERROR: The maximum post length is 80 characters.")
     }
 
     //characters quantity
@@ -171,6 +178,7 @@ export class PostBusiness {
     const newPost = new Post(
       this.idGenerator.generate(),
       payload.id,
+      topic,
       content,
       0,
       0,
@@ -207,6 +215,7 @@ export class PostBusiness {
     const post = new Post(
       postDB.id,
       postDB.creator_id,
+      postDB.topic,
       postDB.content,
       postDB.upvote,
       postDB.downvote,

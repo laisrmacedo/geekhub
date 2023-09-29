@@ -12,6 +12,7 @@ export interface GetPostByIdOutputDTO {
 
 export interface CreatePostOutputDTO {
   token: string,
+  topic: string,
   content: string
 }
 
@@ -79,11 +80,19 @@ export class PostDTO {
 
   public createPostInputDTO(
     token: string | undefined,
+    topic: unknown,
     content: unknown,
   ): CreatePostOutputDTO{
 
     if(!token){
       throw new BadRequestError("ERROR: log in to create a posts.")
+    }
+
+    if(!topic || topic === ""){
+      throw new BadRequestError("ERROR: topic field is mandatory.")
+    }
+    if (typeof topic !== "string") {
+      throw new BadRequestError("ERROR: 'topic' must be of type string.")
     }
 
     if(!content || content === ""){
@@ -95,6 +104,7 @@ export class PostDTO {
 
     const dto: CreatePostOutputDTO = {
       token,
+      topic,
       content
     }
     

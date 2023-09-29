@@ -5,6 +5,7 @@ import { UserDB } from "./UserDatabase";
 export interface PostDB {
   id: string,
   creator_id: string,
+  topic: string,
   content: string,
   upvote: number,
   downvote: number,

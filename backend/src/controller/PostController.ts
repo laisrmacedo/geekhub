@@ -50,6 +50,7 @@ export class PostController {
     try {
       const input = this.postDTO.createPostInputDTO(
         req.headers.authorization,
+        req.body.topic,
         req.body.content
       )
 
