@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { userRouter } from './router/userRouter'
 import { postRouter } from './router/postRouter'
 import { commentRouter } from './router/commentRouter'
+import { flagRouter } from './router/flagRoutes'
 
 dotenv.config()
 
@@ -19,3 +20,4 @@ app.listen(Number(process.env.EXPRESS_PORT), () => {
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
+app.use("/flags", flagRouter)

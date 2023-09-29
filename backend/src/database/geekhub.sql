@@ -79,3 +79,10 @@ CREATE TABLE comment_upvote_downvote (
 
 SELECT * FROM comment_upvote_downvote;
 DROP TABLE comment_upvote_downvote;
+
+CREATE TABLE flags (
+    flag VARCHAR(20)
+);
+
+SELECT * FROM flags;
+DROP TABLE flags;
