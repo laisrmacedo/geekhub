@@ -7,6 +7,7 @@ export interface PostDB {
   creator_id: string,
   topic: string,
   content: string,
+  flags: string[],
   upvote: number,
   downvote: number,
   comments: number,

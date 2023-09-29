@@ -15,6 +15,7 @@ export interface PostBusinessModel {
   creatorId: string,
   topic: string,
   content: string,
+  flags: string[],
   upvote: number,
   downvote: number,
   comments: number,
@@ -75,6 +76,7 @@ export class PostBusiness {
           creatorNickname: postCreator.nickname,
           topic: post.topic,
           content: post.content,
+          flags: post.flags,
           vote: postVote,
           upvote: post.upvote,
           downvote: post.downvote,
@@ -142,7 +144,9 @@ export class PostBusiness {
       loggedUser: payload.nickname,
       id: postDB.id,
       creatorNickname: postCreator.nickname,
+      topic: postDB.topic,
       content: postDB.content,
+      flags: postDB.flags,
       postVote: postVote,
       upvote: postDB.upvote,
       downvote: postDB.downvote,
@@ -157,7 +161,7 @@ export class PostBusiness {
   }
 
   public createPost = async (input: CreatePostOutputDTO): Promise<void> => {
-    const { token, topic, content } = input
+    const { token, topic, content, flags } = input
 
     //login ckeck
     const payload = this.tokenManager.getPayload(token)
@@ -175,11 +179,16 @@ export class PostBusiness {
       throw new BadRequestError("ERROR: The maximum post length is 280 characters.")
     }
 
+    if (flags.length > 3) {
+      throw new BadRequestError("ERROR: The maximum quantity is 3 flags.")
+    }
+
     const newPost = new Post(
       this.idGenerator.generate(),
       payload.id,
       topic,
       content,
+      flags,
       0,
       0,
       0,
@@ -217,6 +226,7 @@ export class PostBusiness {
       postDB.creator_id,
       postDB.topic,
       postDB.content,
+      postDB.flags,
       postDB.upvote,
       postDB.downvote,
       postDB.comments,

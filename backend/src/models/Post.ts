@@ -7,6 +7,7 @@ export class Post {
     private creatorId: string,
     private topic: string, 
     private content: string, 
+    private flags: string[], 
     private upvote: number,
     private downvote: number,
     private comments: number,
@@ -34,6 +35,13 @@ export class Post {
   }
   public setContent(value: string): void{
     this.content = value
+  }
+
+  public getFlags():string[]{
+    return this.flags
+  }
+  public setFlags(value: string[]): void{
+    this.flags = value
   }
 
   public getUpvote():number{
@@ -80,6 +88,7 @@ export class Post {
       creator_id: this.creatorId,
       topic: this.topic, 
       content: this.content, 
+      flags: this.flags, 
       upvote: this.upvote,
       downvote: this.downvote,
       comments: this.comments,
@@ -94,6 +103,7 @@ export class Post {
       creatorId: this.creatorId,
       topic: this.topic, 
       content: this.content, 
+      flags: this.flags, 
       upvote: this.upvote,
       downvote: this.downvote,
       comments: this.comments,

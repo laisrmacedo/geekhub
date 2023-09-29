@@ -13,7 +13,8 @@ export interface GetPostByIdOutputDTO {
 export interface CreatePostOutputDTO {
   token: string,
   topic: string,
-  content: string
+  content: string,
+  flags: string[]
 }
 
 export interface EditPostOutputDTO {
@@ -82,6 +83,7 @@ export class PostDTO {
     token: string | undefined,
     topic: unknown,
     content: unknown,
+    flags: unknown
   ): CreatePostOutputDTO{
 
     if(!token){
@@ -102,10 +104,18 @@ export class PostDTO {
       throw new BadRequestError("ERROR: 'content' must be of type string.")
     }
 
+    if(!flags || Object.keys(flags).length === 0){
+      throw new BadRequestError("ERROR: flags field is mandatory.")
+    }
+    if (!Array.isArray(flags)) {
+      throw new BadRequestError("ERROR: 'flags' must be an array.")
+    }
+
     const dto: CreatePostOutputDTO = {
       token,
       topic,
-      content
+      content,
+      flags
     }
     
     return dto

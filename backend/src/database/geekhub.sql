@@ -17,6 +17,7 @@ CREATE TABLE posts (
   creator_id TEXT NOT NULL,
   topic TEXT NOT NULL,
   content TEXT NOT NULL,
+  flags TEXT[] NOT NULL,
   upvote INTEGER NOT NULL,
   downvote INTEGER NOT NULL,
   comments INTEGER NOT NULL,

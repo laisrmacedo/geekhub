@@ -51,7 +51,8 @@ export class PostController {
       const input = this.postDTO.createPostInputDTO(
         req.headers.authorization,
         req.body.topic,
-        req.body.content
+        req.body.content,
+        req.body.flags
       )
 
       await this.postBusiness.createPost(input)
