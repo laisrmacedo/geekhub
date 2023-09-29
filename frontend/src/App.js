@@ -3,6 +3,8 @@ import { Router } from "./router/Router";
 import { GlobalStyle } from "./GlobalStyle";
 import { GlobalContext } from "./context/GlobalContext";
 
+export const BASE_URL = 'http://localhost:3003'
+
 function App() {
   const [currentTheme, setCurrentTheme] = useState(false || JSON.parse(localStorage.getItem("theme")))
   

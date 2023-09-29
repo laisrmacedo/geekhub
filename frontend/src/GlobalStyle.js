@@ -37,7 +37,7 @@ export const InputForLongText = styled.textarea`
 `
 
 export const InputForShortText = styled.input`
-  height: 50px;
+  height: 40px;
   border: 1px solid #D5D8DE;
   padding: 20px 16px;
   width: 100%;
@@ -50,10 +50,11 @@ export const Btn = styled.button`
   border-radius: 10px;
   border: none;
   width:  100%;
-  height: 50px;
+  height: 40px;
   /* background:  ${(props) => (props.theme ? '#F9F3EB8a' : '#50677A5a')}; */
   /* background-color: ${(props) => (props.theme ? '#213555' : 'red')}; */
   /* color: #fff; */
   font-weight: 800;
+  cursor: pointer;
 `
 

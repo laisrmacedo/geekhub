@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from '../components/Container';
-// import axios from "axios";
+import axios from "axios";
 // import { Footer } from "../components/Footer"
 import logo from "../assets/logo.png"
 import { InputForShortText, Btn } from "../GlobalStyle";
-import { goToSignup } from "../router/coordinator";
+import { goToDashboard, goToSignup } from "../router/coordinator";
+import { BASE_URL } from "../App";
 
 const Content = styled.div`
   height: 100%;
@@ -32,6 +33,14 @@ const Content = styled.div`
     width: 100%;
     margin-top: 16px;
   }
+  .login-btn{
+    background: rgb(33, 53, 85);
+    color: #f0f0f0;
+  }
+  .signup-btn{
+    background: rgb(229, 210, 131,0.5);
+    /* color: #f0f0f0; */
+  }
   
   form{
     display: flex;
@@ -39,9 +48,6 @@ const Content = styled.div`
     align-items: center;
     width: 100%;
     
-    button{
-      width: 90%;
-    }
     
     div{
       width: 90%;
@@ -73,16 +79,17 @@ export const Login = () => {
     password: form.password
   }
 
-  // const login = async () => {
-  //   try {
-  //     const response = await axios.post(BASE_URL + `users/login`, body)
-  //     localStorage.setItem("token", response.data.token)
-  //     goToPostsPage(navigate)
-  //   } catch (error) {
-  //     console.log(error.response.data)
-  //     setError(error.response.data)
-  //   }
-  // }
+  const login = async () => {
+    try {
+      const response = await axios.post(BASE_URL + `/users/login`, body)
+      localStorage.setItem("token", response.data.token)
+      // console.log(response)
+      goToDashboard(navigate, response.data.nickname)
+    } catch (error) {
+      console.log(error.response.data)
+      setError(error.response.data)
+    }
+  }
 
   return (
       <Container>
@@ -106,9 +113,10 @@ export const Login = () => {
             value={form.password}
             onChange={onChangeForm}
           />
+          <span></span>
           <span>
-            <Btn id="signup" onClick={() => goToSignup(navigate)}> Signup </Btn>
-            <Btn id="login"> Login </Btn>
+            <Btn id="signup" className="signup-btn" onClick={() => goToSignup(navigate)}> Signup </Btn>
+            <Btn id="login" className="login-btn" onClick={() => login()}> Login </Btn>
           </span>
         </Content>
         {/* <Footer /> */}
