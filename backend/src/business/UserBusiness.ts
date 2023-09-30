@@ -130,6 +130,7 @@ export class UserBusiness {
         }
 
         const output = {
+            nickname: userDB.nickname,
             token: this.tokenManager.createToken(tokenPayload)
         }
 
