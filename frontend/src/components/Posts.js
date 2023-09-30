@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { goToLogin } from "../router/coordinator";
 import { Btn, InputForLongText } from "../GlobalStyle";
 import styled from "styled-components";
-import { DiscussionItem } from "./DiscussionItem";
-// import axios from "axios";
-// import { BASE_URL } from "../App";
+import { DiscussionCard } from "./DiscussionCard";
+import axios, { all } from "axios";
+import { BASE_URL } from "../App";
+import { GlobalContext } from "../context/GlobalContext";
 
 
 const Content = styled.div`
@@ -52,8 +53,7 @@ const Content = styled.div`
     display: flex;
     gap: 8px;
     flex-direction: column;
-    justify-content: center;
-    align-items: start;
+    justify-content: start;
     /* border: 1px red solid; */
   }
 `
@@ -69,10 +69,8 @@ export const ContainerPosts = styled.div`
 
 export const Posts = () => {
   const navigate = useNavigate()
-
-  const [allPosts, setAllPosts] = useState([])
+  const { getPosts, allPosts } = useContext(GlobalContext)
   const [content, setContent] = useState("")
-  const [avatar, setAvatar] = useState("")
 
   const onChangePost = (e) => {
     setContent(e.target.value)
@@ -92,7 +90,7 @@ export const Posts = () => {
     if(localStorage.getItem("token") === ""){
       goToLogin(navigate)
     }else{
-      getAvatar('users/user', headers)
+      getPosts('/posts', headers)
     }
   }, [])
 
@@ -105,64 +103,32 @@ export const Posts = () => {
     // }
   }
 
-  const getPosts = async (path, headers) => {
-    // try {
-    //   const responde = await axios.get(BASE_URL + path, headers)
-    //   setAllPosts(responde.data)
-    // } catch (error) {
-    //   console.log(error.response.data)
-    // }
-  }
-
-  const getAvatar = async (path, headers) => {
-    // try {
-    //   const responde = await axios.get(BASE_URL + path, headers)
-    //   setAvatar(responde.data.avatar)
-    // } catch (error) {
-    //   console.log(error.response.data)
-    // }
-  }
-
-  useEffect(() => {
-    getPosts('posts', headers)
-  }, [allPosts])
-
   return (
-      <Content>
-        <div className="new-post">
-          <span>Add a new post</span>
-          {/* <InputForLongText
-            placeholder="Escreva seu post..."
-            type="text"
-            name="post"
-            value={content}
-            isLimit={content.length > 280 ? true : false}
-            onChange={onChangePost}
-          /> */}
-          <Btn onClick={() => createPost()}>+</Btn>
-        </div>
-        <div className="container-posts">
-          <DiscussionItem/>
-          <DiscussionItem/>
-        </div>
-        {/* <Box> */}
-          {/* {allPosts.map((post) => {
-            return (
-              <PostComment
-                key={post.id}
-                id={post.id}
-                path={'posts'}
-                creatorNickname={post.creatorNickname}
-                content={post.content}
-                upvote={post.upvote}
-                comments={post.comments.length}
-                isPost={true}
-                vote={post.vote}
-                user={post.loggedUser}
-              />
-            )
-          }).reverse()} */}
-        {/* </Box> */}
-      </Content>
+    <Content>
+      <div className="new-post">
+        <span>Add a new post</span>
+        {/* <InputForLongText
+          placeholder="Escreva seu post..."
+          type="text"
+          name="post"
+          value={content}
+          isLimit={content.length > 280 ? true : false}
+          onChange={onChangePost}
+        /> */}
+        <Btn onClick={() => createPost()}>+</Btn>
+      </div>
+      <div className="container-posts">
+      {allPosts.map((post) => {
+          return (
+            <DiscussionCard
+              key={post.id}
+              post={post}
+              path={'/posts'}
+              isPost={true}
+            />
+          )
+        })}
+      </div>
+    </Content>
   )
 }

@@ -2,12 +2,23 @@ import { useEffect, useState } from "react";
 import { Router } from "./router/Router";
 import { GlobalStyle } from "./GlobalStyle";
 import { GlobalContext } from "./context/GlobalContext";
+import axios from "axios";
 
 export const BASE_URL = 'http://localhost:3003'
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState(false || JSON.parse(localStorage.getItem("theme")))
-  
+  const [allPosts, setAllPosts] = useState([])
+
+  const getPosts = async (path, headers) => {
+    try {
+      const response = await axios.get(BASE_URL + path, headers)
+      setAllPosts(response.data.sort((a,b)=> Date.parse(b.createdAt) - Date.parse(a.createdAt)))
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
   useEffect(()=>{
     localStorage.setItem("theme", currentTheme)
   },[currentTheme])
@@ -15,7 +26,8 @@ function App() {
   const context = {
     currentTheme,
     setCurrentTheme,
-    // BASE_URL,
+    getPosts,
+    allPosts
     // mobileBreakPoint,
   }
   return (
