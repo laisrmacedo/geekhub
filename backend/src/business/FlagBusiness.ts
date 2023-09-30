@@ -17,7 +17,7 @@ export class FlagBusiness {
     }
 
     const flagsDB = await this.flagDatabase.getFlags(q)
-    const flags = flagsDB.map((flagDB) => flagDB.flag)
+    const flags = flagsDB.map((flagDB) => flagDB)
     
     return flags
   }
