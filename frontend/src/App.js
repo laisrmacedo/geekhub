@@ -16,6 +16,7 @@ function App() {
       setAllPosts(response.data.sort((a,b)=> Date.parse(b.createdAt) - Date.parse(a.createdAt)))
     } catch (error) {
       console.log(error.response.data)
+      setAllPosts(null)
     }
   }
 

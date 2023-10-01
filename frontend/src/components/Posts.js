@@ -9,7 +9,6 @@ import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
 import { ContainerModal } from "./ContainerModal";
 
-
 const Content = styled.div`
   width: 100%;
   height: 100%;
@@ -90,7 +89,7 @@ export const Posts = () => {
   }
 
   useEffect(() => {
-    if(localStorage.getItem("token") === ""){
+    if(localStorage.getItem("token") === "" || allPosts === null){
       goToLogin(navigate)
     }else{
       getPosts('/posts', headers)
