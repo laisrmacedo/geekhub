@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from '../components/Container';
 import axios from "axios";
-// import { Footer } from "../components/Footer"
 import logo from "../assets/logo.png"
 import { InputForShortText, Btn } from "../GlobalStyle";
 import { goToDashboard, goToSignup } from "../router/coordinator";
@@ -39,20 +38,15 @@ const Content = styled.div`
   }
   .signup-btn{
     background: rgb(229, 210, 131,0.5);
-    /* color: #f0f0f0; */
-  }
-  
-  form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    
-    
-    div{
-      width: 90%;
-    }
   }  
+  >div{
+    height: 24px;
+    width: 100%;
+    p{
+      font-size: 12px;
+      color: rgb(33, 53, 85);
+    }
+  }
 `
 
 export const Login = () => {
@@ -82,14 +76,17 @@ export const Login = () => {
   const login = async () => {
     try {
       const response = await axios.post(BASE_URL + `/users/login`, body)
+      goToDashboard(navigate, response.data.nickname)
       localStorage.setItem("token", response.data.token)
       // console.log(response)
-      goToDashboard(navigate, response.data.nickname)
     } catch (error) {
       console.log(error.response.data)
       setError(error.response.data)
     }
   }
+
+  const error1 = "ERROR: all fields are mandatory."
+  const error2 = "ERROR: 'email' or 'password' are wrong."
 
   return (
       <Container>
@@ -113,13 +110,14 @@ export const Login = () => {
             value={form.password}
             onChange={onChangeForm}
           />
-          <span></span>
+          <div>
+            {error === error1 ? <p>Enter your email and password</p>: error === error2 ? <p>Email or password are wrong</p> : <></>}
+          </div>
           <span>
             <Btn id="signup" className="signup-btn" onClick={() => goToSignup(navigate)}> Signup </Btn>
             <Btn id="login" className="login-btn" onClick={() => login()}> Login </Btn>
           </span>
         </Content>
-        {/* <Footer /> */}
       </Container>
   )
 }
