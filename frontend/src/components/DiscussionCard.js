@@ -13,18 +13,21 @@ import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
 
 const Content = styled.div`
-  min-height: ${(props) => (props.length <= 35 ? '120px' : props.length > 200 ? '294px' : props.length + 82 + 'px')};
+  /* min-height: ${(props) => (props.length <= 35 ? '120px' : props.length > 200 ? '294px' : props.length + 82 + 'px')}; */
+  min-height: 200px;
   width: 100%;
   border: 1px solid #E0E0E0;
   background-color: #FBFBFB;
   padding: 16px 12px;
   border-radius: 8px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   align-items: start;
   flex-direction: column;
   justify-content: space-between;
   gap: 8px;
+
+  margin-bottom: 10px;
 
   >p{
     font-size: 12px;
@@ -120,7 +123,7 @@ const Content = styled.div`
   }
 `
 
-const Flag = styled.span`
+export const Flag = styled.span`
   border: 1px solid ${(props) => (`#${props.color}`)};
   font-size: 10px;
   padding: 0 8px;
@@ -202,7 +205,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
     getTime()
     getUser(post.creatorNickname, headers)
     getFlags(headers)
-    console.log(post.comments)
+    // console.log(post.comments)
   }, [])
 
   return (

@@ -38,7 +38,6 @@ export const Body = styled.div`
 
 export const Container = ({children}) => {
   const { currentTheme } = useContext(GlobalContext)
-  console.log(currentTheme)
 
   return(
     <Body theme={currentTheme}>
