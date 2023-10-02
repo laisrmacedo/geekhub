@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Btn } from '../GlobalStyle'
 import { InputWithAutosuggest } from './InputWithAutosuggest'
 import { Flag } from './Flag'
-import { BASE_URL, getFlags, headers } from '../context/GlobalContext'
+import { BASE_URL, GlobalContext, getFlags, getPosts, headers } from '../context/GlobalContext'
 
 const Content = styled.div`
   display: flex;
@@ -103,6 +103,7 @@ export const NewPost = (props) => {
 
   const [allFlags, setAllFlags] = useState([])
   const [selectedFlags, setSelectedFlags] = useState([])
+  const { setAllPosts } = useContext(GlobalContext)
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -129,6 +130,7 @@ export const NewPost = (props) => {
         content: ""
       })
       setSelectedFlags([])
+      getPosts('/posts', headers, setAllPosts)
     } catch (error) {
       console.log(error.response.data)
     }
