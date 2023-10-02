@@ -8,6 +8,9 @@ import axios, { all } from "axios";
 import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
 import { ContainerModal } from "./ContainerModal";
+import ReactModal from 'react-modal';
+import "../modal.css"
+import { NewPost } from "./NewPost";
 
 const Content = styled.div`
   width: 100%;
@@ -60,14 +63,15 @@ const Content = styled.div`
   }
 `
 
-export const ContainerPosts = styled.div`
-  height: calc(100% - 195px);
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 364px;
-  gap: 10px;
-`
+// export const ContainerPosts = styled.div`
+//   height: calc(100% - 195px);
+//   display: flex;
+//   flex-direction: column;
+//   align-items: start;
+//   width: 364px;
+//   gap: 10px;
+// `
+ReactModal.setAppElement('#root')
 
 export const Posts = () => {
   const navigate = useNavigate()
@@ -96,17 +100,31 @@ export const Posts = () => {
     }
   }, [])
 
-  const openModalToCreatePoste = () => {
-    
+  const [modalIsOpen, setIsOpen] = useState(false)
+  const [optionModal, setOptionModal] = useState(Number)
+
+  function handleCloseModal(){
+    setIsOpen(false)
+  }
+
+  function handleOpenModal(){
+    setIsOpen(true)
   }
 
   return (
     <Content>
-      <ContainerModal/>
-      <div className="new-post">
-        <span >Add a new post</span>
-
-        <Btn onClick={() => openModalToCreatePoste()}>+</Btn>
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={handleCloseModal}
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        {/* <ContainerModal closeModal={handleCloseModal}/> */}
+        <NewPost closeModal={handleCloseModal}/>
+      </ReactModal>
+      <div className="new-post" onClick={() => handleOpenModal()}>
+        <span>Add a new post</span>
+        <Btn>+</Btn>
       </div>
       <div className="container-posts">
       {allPosts.map((post) => {
