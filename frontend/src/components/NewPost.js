@@ -4,16 +4,18 @@ import styled from 'styled-components'
 import { Btn } from '../GlobalStyle'
 import { InputWithAutosuggest } from './InputWithAutosuggest'
 import { BASE_URL } from '../App'
-import { Flag } from './DiscussionCard'
+import { Flag } from './Flag'
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 100%;
   border-radius: 10px;
   padding: 24px;
   background-color: #F0F0F0;
+  width: 40vw;
+  min-width: 300px;
+  font-family: 'Open Sans', sans-serif;
 
   h2{
     color: #000;
@@ -81,8 +83,8 @@ const Content = styled.div`
     border: none;
     color: #FFF;
     background: ;
-    background: ${(props) => ((props.topic.length === 0 || props.content.length === 0)? `#4F709C4a`: `#4F709C`)};
-    cursor: ${(props) => ((props.topic.length === 0 || props.content.length === 0)? `auto`: `pointer`)};
+    background: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.flags)? `#4F709C4a`: `#4F709C`)};
+    cursor: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.flags)? `auto`: `pointer`)};
   }
 
   #cancelBtn{
@@ -123,6 +125,7 @@ export const NewPost = (props) => {
       createOrEditPost('patch')
       // dispatch(closeModal())
     }
+    props.closeModal()
   }
 
   const onChangeForm = (e) => {
@@ -159,22 +162,24 @@ export const NewPost = (props) => {
   const getFlags = async () => {
     try {
       const response = await axios.get(BASE_URL + `/flags`, headers)
-      console.log(response.data)
-      // setContent("")
       setAllFlags(response.data)
     } catch (error) {
       console.log(error.response.data)
     }
   }
 
+  const updateSelectedFlags = (item) => {
+    const newArray = selectedFlags.filter((flag)=>flag !== item)
+    setSelectedFlags(newArray)
+  }
+
 
   useEffect(() => {
     getFlags()
-    console.log(selectedFlags.length)
   }, []);
 
   return (
-    <Content topic={form.topic} content={form.content}>
+    <Content topic={form.topic} content={form.content} flags={selectedFlags.length === 0}>
       {/* <h2>What’s on your mind?</h2> */}
       <form onSubmit={handleClick}>
         {/* <div> */}
@@ -198,14 +203,14 @@ export const NewPost = (props) => {
           />
         {/* </div> */}
         <div className='newPostFlags'>
-          {allFlags.filter((item)=>selectedFlags.includes(item.flag)).map((item)=> <Flag key={item.id} color={item.color}>{item.flag}</Flag>)}
+          {allFlags.filter((item)=>selectedFlags.includes(item.flag)).map((item)=> <Flag key={item.id} item={item} showX={true} onclickX={updateSelectedFlags}/>)}
         </div>
         <InputWithAutosuggest suggestions={allFlags} setSelectedFlags={setSelectedFlags} selectedFlags={selectedFlags}/>
         {props.component === 'toCreate'? 
           <button id="createBtn" disabled={(form.topic.length === 0 || form.content.length === 0)? true : false}>Create</button>
           :
           <span>
-          <Btn id="cancelBtn" >Cancel</Btn>
+          <Btn id="cancelBtn" onClick={() => props.closeModal()}>Cancel</Btn>
           <Btn id="postBtn" disabled={(form.topic.length === 0 || form.content.length === 0 || selectedFlags.length === 0)? true : false}>Post</Btn>
         </span>
         }
