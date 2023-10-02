@@ -200,7 +200,8 @@ export const DiscussionCard = ({post, isPost, path}) => {
       <span className="flags">
         <h1>{post.topic.charAt(0).toUpperCase() + post.topic.slice(1)}</h1>
         <div>
-          {flags.map((item)=><Flag key={item.name} item={item} showx={false.toString()}/>)}
+          {flags.filter((item) => post.flags.includes(item.name))
+            .map((item)=><Flag key={item.name} item={item} showx={false.toString()} isAside={false}/>)}
         </div>
       </span>
       <p className="content">{post.content}</p>
