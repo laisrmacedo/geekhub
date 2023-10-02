@@ -115,7 +115,7 @@ export const InputWithAutosuggest = ({setSelectedFlags, selectedFlags}) => {
   const renderSuggestion = suggestion => <div>{suggestion}</div>;
 
   const inputProps = {
-    placeholder: 'Select up to 3 flags related to this post',
+    placeholder: selectedFlags.length === 3 ? '3 selected topics' : 'Select up to 3 topics related to this post',
     value,
     onChange,
     disabled: selectedFlags.length === 3 ? true : false
