@@ -9,8 +9,7 @@ import trash from "../assets/delete.png";
 import { useContext, useEffect, useState } from "react";
 // import { goToCommentsPage } from "../router/coordinator";
 import axios from "axios";
-import { BASE_URL } from "../App";
-import { GlobalContext } from "../context/GlobalContext";
+import { BASE_URL, GlobalContext, getFlags, headers } from "../context/GlobalContext";
 import { Flag } from "./Flag";
 
 const Content = styled.div`min-height: 200px;
@@ -127,26 +126,10 @@ export const DiscussionCard = ({post, isPost, path}) => {
   const [flags, setFlags] = useState([])
   const { getPosts } = useContext(GlobalContext)
 
-  const headers = {
-    headers: {
-      authorization: localStorage.getItem("token")
-    }
-  }
-
   const getUser = async (nickname, headers) => {
     try {
       const response = await axios.get(BASE_URL + `/users?q=${nickname}`, headers)
       setUser(response.data[0])
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
-
-  const getFlags = async (headers) => {
-    try {
-      const response = await axios.get(BASE_URL + `/flags`, headers)
-      const cardFlags = response.data.filter((item)=> post.flags.includes(item.name))
-      setFlags(cardFlags)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -192,7 +175,9 @@ export const DiscussionCard = ({post, isPost, path}) => {
   useEffect(() => {
     getTime()
     getUser(post.creatorNickname, headers)
-    getFlags(headers)
+    getFlags(setFlags)
+
+    setFlags(flags.filter((item)=> post.flags.includes(item.name)))
   }, [])
 
   return (
