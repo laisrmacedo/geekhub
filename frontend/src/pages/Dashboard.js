@@ -2,8 +2,8 @@ import { Container } from '../components/Container';
 import { Header } from '../components/Header';
 import styled from "styled-components";
 import { UserInfo } from '../components/UserInfo';
-import { Btn } from '../GlobalStyle';
 import { Posts } from '../components/Posts';
+import { AsideFlags } from '../components/AllFlags';
 
 const Content = styled.div`
   height: calc(100% - 80px);
@@ -37,7 +37,9 @@ export const Dashboard = () => {
         <section>
           <Posts/>
         </section>
-        <aside></aside>
+        <aside>
+          <AsideFlags/>
+        </aside>
       </Content>
     </Container>
   )
