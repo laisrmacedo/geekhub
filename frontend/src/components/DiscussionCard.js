@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
+import { Flag } from "./Flag";
 
 const Content = styled.div`
   /* min-height: ${(props) => (props.length <= 35 ? '120px' : props.length > 200 ? '294px' : props.length + 82 + 'px')}; */
@@ -123,16 +124,6 @@ const Content = styled.div`
   }
 `
 
-export const Flag = styled.span`
-  border: 1px solid ${(props) => (`#${props.color}`)};
-  font-size: 10px;
-  padding: 0 8px;
-  background: #fff;
-  border-radius: 4px;
-  background: ${(props) => (`#${props.color}1a`)};
-  color: ${(props) => (`#${props.color}`)};
-`
-
 export const DiscussionCard = ({post, isPost, path}) => {
   const navigate = useNavigate()
   const [user, setUser] = useState({})
@@ -228,7 +219,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
       <span className="flags">
         <h1>{post.topic.charAt(0).toUpperCase() + post.topic.slice(1)}</h1>
         <div>
-          {flags.map((item)=><Flag key={item.id} color={item.color}>{item.flag}</Flag>)}
+          {flags.map((item)=><Flag key={item.id} item={item} showX={false}/>)}
         </div>
       </span>
       <p className="content">{post.content}</p>
