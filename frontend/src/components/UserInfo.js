@@ -2,12 +2,14 @@
 import styled from "styled-components";
 // import axios from "axios";
 // import { BASE_URL } from "../App";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
 // import { goToLoginPage } from "../router/coordinator";
 import { useEffect } from "react";
 
 import { InputForShortText } from "../GlobalStyle";
+import { goToLogin } from "../router/coordinator";
+import { BASE_URL, GlobalContext, getUser, headers } from "../context/GlobalContext";
 
 const Content = styled.div`
   width: 100%;
@@ -69,21 +71,34 @@ const Content = styled.div`
 
 export const UserInfo = () => {
   const navigate = useNavigate()
+  const {user} = useParams()
+  const { currentUser, setCurrentUser } = useContext(GlobalContext)
+
+  const logout = () => {
+    localStorage.setItem("token", "")
+    goToLogin(navigate)
+  }
+
+  useEffect(()=>{
+    getUser(user, headers, setCurrentUser)
+    console.log(user)
+  },[user])
 
   return (
     <Content>
       <figure>
-        <img src="https://img.freepik.com/fotos-gratis/mulher-bonita-com-cabelo-encaracolado-mantem-a-mao-no-pescoco-sorri-gentilmente-usa-um-macacao-casual-carmesim-olha-feliz-para-a-camera_273609-39135.jpg"/>
+        <img src={currentUser?.avatar}/>
       </figure>
       <div className="user-id">
-        <h4 className="name">Nome da Pessoa</h4>
-        <p className="nickname">@pessoa</p>
+        <h4 className="name">{currentUser?.nickname}</h4>
+        {/* <p className="nickname">@pessoa</p> */}
       </div>
       <div className="user-details">
-        <span>pessoa@gmail.com</span>
-        <span className="borderTopBottom">30 posts</span>
-        <span>77 comments</span>
+        <span>{currentUser?.email}</span>
+        {/* <span className="borderTopBottom">30 posts</span>
+        <span>77 comments</span> */}
       </div>
+      <span onClick={() => logout()}>Logout</span>
     </Content>
   )
 }

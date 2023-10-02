@@ -28,3 +28,12 @@ export const getPosts = async (path, headers, set) => {
     set(null)
   }
 }
+
+export const getUser = async (nickname, headers, set) => {
+  try {
+    const response = await axios.get(BASE_URL + `/users?q=${nickname}`, headers)
+    set(response.data[0])
+  } catch (error) {
+    console.log(error.response.data)
+  }
+}

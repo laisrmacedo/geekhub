@@ -9,7 +9,7 @@ import trash from "../assets/delete.png";
 import { useContext, useEffect, useState } from "react";
 // import { goToCommentsPage } from "../router/coordinator";
 import axios from "axios";
-import { BASE_URL, GlobalContext, getFlags, getPosts, headers } from "../context/GlobalContext";
+import { BASE_URL, GlobalContext, getFlags, getPosts, getUser, headers } from "../context/GlobalContext";
 import { Flag } from "./Flag";
 
 const Content = styled.div`min-height: 200px;
@@ -122,18 +122,9 @@ const Content = styled.div`min-height: 200px;
 
 export const DiscussionCard = ({post, isPost, path}) => {
   const navigate = useNavigate()
-  const [user, setUser] = useState({})
   const [flags, setFlags] = useState([])
-  const { setAllPosts } = useContext(GlobalContext)
-
-  const getUser = async (nickname, headers) => {
-    try {
-      const response = await axios.get(BASE_URL + `/users?q=${nickname}`, headers)
-      setUser(response.data[0])
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
+  const { setAllPosts, currentUser } = useContext(GlobalContext)
+  const [user, setUser] = useState(currentUser)
 
   const upvoteOrDownvote = async (path, id, body, headers) => {
     try {
@@ -174,7 +165,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
   
   useEffect(() => {
     getTime()
-    getUser(post.creatorNickname, headers)
+    getUser(post.creatorNickname, headers, setUser)
     getFlags(setFlags)
 
     setFlags(flags.filter((item)=> post.flags.includes(item.name)))
@@ -193,8 +184,8 @@ export const DiscussionCard = ({post, isPost, path}) => {
           </span>
         </span>
         {isPost ? 
-          ((post.creatorNickname === user.nickname || user.nickname === "bigboss") ? <img src={trash} onClick={() => toDelete("/posts", post.id, headers)} /> : <></>):
-          ((post.creatorNickname === user.nickname || user.nickname === "bigboss") ? <img src={trash} onClick={() => toDelete("/comments", post.id, headers)} /> : <></>)
+          ((post.creatorNickname === currentUser?.nickname || currentUser?.nickname === "bigboss") ? <img src={trash} onClick={() => toDelete("/posts", post.id, headers)} /> : <></>):
+          ((post.creatorNickname === currentUser?.nickname || currentUser?.nickname === "bigboss") ? <img src={trash} onClick={() => toDelete("/comments", post.id, headers)} /> : <></>)
         }
       </div>
       <span className="flags">

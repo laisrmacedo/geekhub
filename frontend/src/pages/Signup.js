@@ -1,14 +1,13 @@
-// import { Footer } from "../components/Footer"
-// import { Headers } from "../components/Header"
 import styled from "styled-components";
 import { Container } from '../components/Container';
 import logo from "../assets/logo.png"
-// import axios from "axios";
-// import { BASE_URL } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { InputForShortText, Btn } from "../GlobalStyle";
-// import { goToPostsPage } from "../router/coordinator";
+import axios from "axios";
+import { BASE_URL } from "../context/GlobalContext";
+import { goToLogin } from "../router/coordinator";
+import { goToDashboard } from "../router/coordinator";
 
 const Content = styled.div`
   height: 100%;
@@ -31,18 +30,13 @@ const Content = styled.div`
     color: #213555;
   }
 
-  form{
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    margin-top: 30px;
-  }
   .inputs{
     display: flex;
     flex-direction: column;
     gap: 8px;
     width:100%;
     height: 250px;
+    margin-top: 40px;
 
     p{
       text-align: center;
@@ -54,30 +48,31 @@ const Content = styled.div`
       font-weight: 400;
       color: #808080;
     }
-  }
-
-  .terms{
-    display: flex;
-    flex-direction: column;
-    gap:17px;
-
-    p{
-      font-size: 14px;
-      color: black;
-    }
-
-    input{
-      width: 18px;
-      height: 18px;
-    }
 
     span{
-      display:flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 11px;
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    div{
+      height: 50px;
+      width: 100%;
+      p{
+        font-size: 12px;
+        color: rgb(33, 53, 85);
+        text-align: left;
+      }
     }
   }
+  .signup-btn{
+    background: rgb(33, 53, 85);
+    color: #f0f0f0;
+  }
+  .login-btn{
+    background: rgb(229, 210, 131,0.5);
+  }  
 `
 
 export const Signup = () => {
@@ -90,11 +85,6 @@ export const Signup = () => {
 
   const [error, setError] = useState("")
 
-  const handleClick = (e) => {
-    e.preventDefault()
-    // signup()
-  }
-
   const onChangeForm = (e) => {
     const { name, value } = e.target
     setForm({ ...form, [name]: value })
@@ -106,71 +96,69 @@ export const Signup = () => {
     password: form.password
   }
 
-  // const signup = async () => {
-  //   try {
-  //     const response = await axios.post(BASE_URL + `users/signup`, body)
-  //     localStorage.setItem("token", response.data.token)
-  //     goToPostsPage(navigate)
-  //   } catch (error) {
-  //     console.log(error.response.data)
-  //     setError(error.response.data)
-  //   }
-  // }
+  const signup = async () => {
+    try {
+      const response = await axios.post(BASE_URL + `/users/signup`, body)
+      localStorage.setItem("token", response.data.token)
+      goToDashboard(navigate)
+    } catch (error) {
+      console.log(error.response.data)
+      setError(error.response.data)
+    }
+  }
+
+  const error1 = "ERROR: 'nickname' must be at least 4 characters."
+  const error2 = "ERROR: 'email' must be like 'example@example.example'."
+  const error3 = "ERROR: 'password' must be between 8 and 12 characters, with uppercase and lowercase letters and at least one number and one special character."
+  const error4 = "ERROR: 'nickname' already exists."
+  const error5 = "ERROR: 'email' already exists."
 
   return (
-    <>
-      <Container>
-        <Content>
-          <figure>
-            <img src={logo}/>
-          </figure>
-          <h2>Hey there!</h2>
-          <h2>Welcome aboard!</h2>
-          <form onSubmit={handleClick}>
-            <div className="inputs">
-              <InputForShortText
-                placeholder="Nickname"
-                required
-                type="text"
-                name="nickname"
-                value={form.nickname}
-                onChange={onChangeForm}
-              />
-              <InputForShortText 
-                placeholder="E-mail" 
-                required
-                type="text"
-                name="email"
-                value={form.email}
-                onChange={onChangeForm}
-              />
-              <InputForShortText 
-                placeholder="Password"
-                required
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={onChangeForm}
-              />
-              {error === "ERROR: 'nickname' must be at least 4 characters." ? <p>Apelido deve ter pelo menos 4 caracteres.</p> : null}
-              {error === "ERROR: 'email' must be like 'example@example.example'." ? <p>Informe um email válido.</p> : null}
-              {error === "ERROR: 'password' must be between 8 and 12 characters, with uppercase and lowercase letters and at least one number and one special character." ?
-              <p>A senha deve ter entre 8 e 12 caracteres, com letras maiúscula e minúscula, pelos menos um número e um caracter especial.</p> : null}
-              {error === "ERROR: 'nickname' already exists." ? <p>Apelido já cadastrado.</p> : null}
-              {error === "ERROR: 'email' already exists." ? <p>Email já cadastrado.</p> : null}
-            </div>
-            <div className="terms">
-              <p>Ao continuar, você concorda com o nosso Contrato de usuário e nossa Política de Privacidade</p>
-              <span>
-                <input type='checkbox' />
-                <p>Eu concordo em receber emails sobre coisas legais no Labeddit</p>
-              </span>
-            </div>
-            <Btn className="signup"> Create Account </Btn>
-          </form>
-        </Content>
-      </Container>
-      {/* <Footer /> */}
-    </>
+    <Container>
+      <Content>
+        <figure>
+          <img src={logo} />
+        </figure>
+        <h2>Hey there!</h2>
+        <h2>Welcome aboard!</h2>
+        <div className="inputs">
+          <InputForShortText
+            placeholder="Nickname"
+            required
+            type="text"
+            name="nickname"
+            value={form.nickname}
+            onChange={onChangeForm}
+          />
+          <InputForShortText
+            placeholder="E-mail"
+            required
+            type="text"
+            name="email"
+            value={form.email}
+            onChange={onChangeForm}
+          />
+          <InputForShortText
+            placeholder="Password"
+            required
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={onChangeForm}
+          />
+          <div>
+            {error === error1? <p>Nickname must be at least 4 characters.</p> : null}
+            {error === error2? <p>Email must be like 'example@example.example'.</p> : null}
+            {error === error3? <p>Password must be between 8 and 12 characters, with uppercase and lowercase letters and at least one number and one special character.</p> : null}
+            {error === error4? <p>Nickname already exists.</p> : null}
+            {error === error5? <p>Email already exists.</p> : null}
+          </div>
+          <span>
+            <Btn className="login-btn" onClick={() => goToLogin(navigate)}> Login </Btn>
+            <Btn className="signup-btn" onClick={() => signup()}> Signup </Btn>
+          </span>
+        </div>
+      </Content>
+    </Container>
   )
 }

@@ -6,12 +6,15 @@ import { GlobalContext } from "./context/GlobalContext";
 function App() {
   const [allPosts, setAllPosts] = useState([])
   const [clickedFlag, setClikedFlag] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
 
   const context = {
     allPosts,
     setAllPosts,
     clickedFlag,
-    setClikedFlag
+    setClikedFlag,
+    currentUser,
+    setCurrentUser
     // mobileBreakPoint,
   }
   return (
