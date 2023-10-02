@@ -6,7 +6,7 @@ import { getFlags } from "../context/GlobalContext"
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   align-items:center;
   width: 100%;
   height: 100%;
@@ -31,6 +31,9 @@ const Content = styled.div`
       background-color: #f0f0f0;
     }
   }
+  >p{
+    cursor: pointer;
+  }
 `
 
 export const AsideFlags = () => {
@@ -45,7 +48,21 @@ export const AsideFlags = () => {
       <div>
         <h3>Topics</h3>
       </div>
-      {allFlags.map((item)=><Flag key={item.name} item={item} showx={false.toString()}/>)}
+      <Flag 
+        item={{name: 'All topics', color: '000'}}
+        showx={false.toString()} 
+        isAside={true}
+      />
+      {allFlags.map((item)=>{
+        return(
+          <Flag 
+            key={item.name} 
+            item={item} 
+            showx={false.toString()} 
+            isAside={true}
+          />
+        )
+      })}
     </Content>
   )
 }

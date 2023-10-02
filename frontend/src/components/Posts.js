@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { DiscussionCard } from "./DiscussionCard";
 import axios, { all } from "axios";
 import { BASE_URL } from "../App";
-import { GlobalContext, getPosts } from "../context/GlobalContext";
+import { GlobalContext, getPosts, headers } from "../context/GlobalContext";
 import ReactModal from 'react-modal';
 import "../modal.css"
 import { NewPost } from "./NewPost";
@@ -28,6 +28,7 @@ const Content = styled.div`
     gap: 4px;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     div{
       width: 100%;
       display: flex;
@@ -62,17 +63,12 @@ ReactModal.setAppElement('#root')
 
 export const Posts = () => {
   const navigate = useNavigate()
-  const { allPosts, setAllPosts } = useContext(GlobalContext)
+  const { allPosts, setAllPosts, clickedFlag } = useContext(GlobalContext)
   const [content, setContent] = useState("")
+  const [filteredPosts, setFilteredPosts] = useState([])
 
   const onChangePost = (e) => {
     setContent(e.target.value)
-  }
-
-  const headers = {
-    headers: {
-      authorization: localStorage.getItem("token")
-    }
   }
 
   const body = {
@@ -80,9 +76,9 @@ export const Posts = () => {
   }
 
   useEffect(() => {
-    if(localStorage.getItem("token") === "" || allPosts === null){
+    if (localStorage.getItem("token") === "" || allPosts === null) {
       goToLogin(navigate)
-    }else{
+    } else {
       getPosts('/posts', headers, setAllPosts)
     }
   }, [])
@@ -90,13 +86,24 @@ export const Posts = () => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const [optionModal, setOptionModal] = useState(Number)
 
-  function handleCloseModal(){
+  function handleCloseModal() {
     setIsOpen(false)
   }
 
-  function handleOpenModal(){
+  function handleOpenModal() {
     setIsOpen(true)
   }
+
+  useEffect(() => {
+    if(clickedFlag){
+      const array = allPosts.filter((post) => {
+        return post.flags.includes(clickedFlag.name)
+      })
+      setFilteredPosts(array)
+    }else{
+      setFilteredPosts(allPosts)
+    }
+  }, [clickedFlag])
 
   return (
     <Content>
@@ -107,13 +114,13 @@ export const Posts = () => {
         overlayClassName="Overlay"
       >
         {/* <ContainerModal closeModal={handleCloseModal}/> */}
-        <NewPost closeModal={handleCloseModal}/>
+        <NewPost closeModal={handleCloseModal} />
       </ReactModal>
       <div className="new-post" onClick={() => handleOpenModal()}>
         <div>Add a new post<span>+</span></div>
       </div>
       <div className="container-posts">
-      {allPosts.map((post) => {
+        {filteredPosts.map((post) => {
           return (
             <DiscussionCard
               key={post.id}
@@ -122,7 +129,8 @@ export const Posts = () => {
               isPost={true}
             />
           )
-        })}
+        })
+        }
       </div>
     </Content>
   )
