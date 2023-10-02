@@ -82,7 +82,8 @@ SELECT * FROM comment_upvote_downvote;
 DROP TABLE comment_upvote_downvote;
 
 CREATE TABLE flags (
-    flag VARCHAR(20)
+    name VARCHAR(20) PRIMARY KEY NOT NULL,
+    color TEXT NOT NULL
 );
 
 SELECT * FROM flags;
