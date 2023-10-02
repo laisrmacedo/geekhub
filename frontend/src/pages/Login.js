@@ -6,7 +6,7 @@ import axios from "axios";
 import logo from "../assets/logo.png"
 import { InputForShortText, Btn } from "../GlobalStyle";
 import { goToDashboard, goToSignup } from "../router/coordinator";
-import { BASE_URL } from "../App";
+import { BASE_URL } from "../context/GlobalContext";
 
 const Content = styled.div`
   height: 100%;
@@ -58,11 +58,6 @@ export const Login = () => {
 
   const [error, setError] = useState("")
 
-  const handleClick = (e) => {
-    e.preventDefault()
-    // login()
-  }
-
   const onChangeForm = (e) => {
     const { name, value } = e.target
     setForm({ ...form, [name]: value })
@@ -78,7 +73,6 @@ export const Login = () => {
       const response = await axios.post(BASE_URL + `/users/login`, body)
       goToDashboard(navigate, response.data.nickname)
       localStorage.setItem("token", response.data.token)
-      // console.log(response)
     } catch (error) {
       console.log(error.response.data)
       setError(error.response.data)
