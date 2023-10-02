@@ -7,7 +7,6 @@ import { DiscussionCard } from "./DiscussionCard";
 import axios, { all } from "axios";
 import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
-import { ContainerModal } from "./ContainerModal";
 import ReactModal from 'react-modal';
 import "../modal.css"
 import { NewPost } from "./NewPost";
