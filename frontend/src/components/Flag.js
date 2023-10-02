@@ -17,9 +17,13 @@ const Content = styled.p`
   
 `
 
-export const Flag = ({item, showx, onclickX}) => {
+export const Flag = ({item, showx, onclickX, onclickflag, isAside}) => {
   return(
-    <Content color={item.color} showx={showx === "true" ? true : false}>
+    <Content 
+      color={item.color} 
+      showx={showx === "true" ? true : false} 
+      onClick={() => isAside && onclickflag(item)}
+    >
       {item.name}
       <span onClick={() => onclickX(item.name)}>x</span>
     </Content>
