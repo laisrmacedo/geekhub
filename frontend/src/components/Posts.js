@@ -1,11 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { goToLogin } from "../router/coordinator";
-import { Btn, InputForLongText } from "../GlobalStyle";
 import styled from "styled-components";
 import { DiscussionCard } from "./DiscussionCard";
-import axios, { all } from "axios";
-import { BASE_URL } from "../App";
 import { GlobalContext, getPosts, headers } from "../context/GlobalContext";
 import ReactModal from 'react-modal';
 import "../modal.css"
@@ -56,6 +53,12 @@ const Content = styled.div`
     gap: 8px;
     flex-direction: column;
     justify-content: start;
+    >p{
+      color: #7E7E88;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 20px;
+    }
   }
 `
 
@@ -63,9 +66,9 @@ ReactModal.setAppElement('#root')
 
 export const Posts = () => {
   const navigate = useNavigate()
-  const { allPosts, setAllPosts, clickedFlag } = useContext(GlobalContext)
+  const { allPosts, setAllPosts, clickedFlag, setClikedFlag } = useContext(GlobalContext)
   const [content, setContent] = useState("")
-  const [filteredPosts, setFilteredPosts] = useState([])
+  const [filteredPosts, setFilteredPosts] = useState(null)
 
   const onChangePost = (e) => {
     setContent(e.target.value)
@@ -75,24 +78,25 @@ export const Posts = () => {
     content: content
   }
 
+  const [modalIsOpen, setIsOpen] = useState(false)
+  const [optionModal, setOptionModal] = useState(Number)
+  
+  function handleCloseModal() {
+    setIsOpen(false)
+  }
+  
+  function handleOpenModal() {
+    setIsOpen(true)
+  }
+  
   useEffect(() => {
     if (localStorage.getItem("token") === "" || allPosts === null) {
       goToLogin(navigate)
     } else {
       getPosts('/posts', headers, setAllPosts)
+      console.log(1, allPosts)
     }
   }, [])
-
-  const [modalIsOpen, setIsOpen] = useState(false)
-  const [optionModal, setOptionModal] = useState(Number)
-
-  function handleCloseModal() {
-    setIsOpen(false)
-  }
-
-  function handleOpenModal() {
-    setIsOpen(true)
-  }
 
   useEffect(() => {
     if(clickedFlag){
@@ -104,6 +108,10 @@ export const Posts = () => {
       setFilteredPosts(allPosts)
     }
   }, [clickedFlag])
+  
+  useEffect(() => {
+    setFilteredPosts(allPosts)
+  }, [allPosts])
 
   return (
     <Content>
@@ -120,16 +128,22 @@ export const Posts = () => {
         <div>Add a new post<span>+</span></div>
       </div>
       <div className="container-posts">
-        {filteredPosts.map((post) => {
-          return (
-            <DiscussionCard
-              key={post.id}
-              post={post}
-              path={'/posts'}
-              isPost={true}
-            />
-          )
-        })
+        {filteredPosts === null? 
+          <p>Loading...</p>
+        :
+        filteredPosts?.length === 0?
+          <p>No posts on this topic</p>
+          :
+          filteredPosts?.map((post) => {
+            return (
+              <DiscussionCard
+                key={post.id}
+                post={post}
+                path={'/posts'}
+                isPost={true}
+              />
+            )
+          })
         }
       </div>
     </Content>
