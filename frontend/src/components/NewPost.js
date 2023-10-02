@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Btn } from '../GlobalStyle'
 import { InputWithAutosuggest } from './InputWithAutosuggest'
-import { BASE_URL } from '../App'
 import { Flag } from './Flag'
+import { BASE_URL, getFlags, headers } from '../context/GlobalContext'
 
 const Content = styled.div`
   display: flex;
@@ -104,12 +104,6 @@ export const NewPost = (props) => {
   const [allFlags, setAllFlags] = useState([])
   const [selectedFlags, setSelectedFlags] = useState([])
 
-  const headers = {
-    headers: {
-      authorization: localStorage.getItem("token")
-    }
-  }
-
   const handleClick = (e) => {
     e.preventDefault()
     createPost()
@@ -140,23 +134,13 @@ export const NewPost = (props) => {
     }
   }
 
-  const getFlags = async () => {
-    try {
-      const response = await axios.get(BASE_URL + `/flags`, headers)
-      setAllFlags(response.data)
-    } catch (error) {
-      console.log(error.response.data)
-    }
-  }
-
   const updateSelectedFlags = (item) => {
     const newArray = selectedFlags.filter((flag) => flag !== item)
     setSelectedFlags(newArray)
   }
 
-
   useEffect(() => {
-    getFlags()
+    getFlags(setAllFlags)
   }, []);
 
   return (
