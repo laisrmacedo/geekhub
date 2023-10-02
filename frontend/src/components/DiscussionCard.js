@@ -9,7 +9,7 @@ import trash from "../assets/delete.png";
 import { useContext, useEffect, useState } from "react";
 // import { goToCommentsPage } from "../router/coordinator";
 import axios from "axios";
-import { BASE_URL, GlobalContext, getFlags, headers } from "../context/GlobalContext";
+import { BASE_URL, GlobalContext, getFlags, getPosts, headers } from "../context/GlobalContext";
 import { Flag } from "./Flag";
 
 const Content = styled.div`min-height: 200px;
@@ -124,7 +124,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
   const navigate = useNavigate()
   const [user, setUser] = useState({})
   const [flags, setFlags] = useState([])
-  const { getPosts } = useContext(GlobalContext)
+  const { setAllPosts } = useContext(GlobalContext)
 
   const getUser = async (nickname, headers) => {
     try {
@@ -147,7 +147,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
   const toDelete = async (path, id, headers) => {
     try {
       await axios.delete(BASE_URL + `${path}/${id}`, headers)
-      getPosts('/posts', headers)
+      getPosts('/posts', headers, setAllPosts)
     } catch (error) {
       console.log(error.response.data)
     }
