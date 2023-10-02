@@ -35,9 +35,9 @@ export class UserBusiness {
         if (payload === null) {
             throw new BadRequestError("ERROR: Login failed.")
         }
-        if (payload.role !== USER_ROLES.ADMIN) {
-            throw new ForbiddenError("ERROR: There's no permission to complete the request.")
-        }
+        // if (payload.role !== USER_ROLES.ADMIN) {
+        //     throw new ForbiddenError("ERROR: There's no permission to complete the request.")
+        // }
 
         const usersDB: UserDB[] = await this.userDatabase.getUsers(q)
         const users = usersDB.map((userDB) => {
