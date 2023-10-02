@@ -23,26 +23,19 @@ const Content = styled.div`
   }
 
   form{
-    /* border: 1px red solid; */
     width:100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    p{
-      font-size: 12px;
-    }
     
     input, textarea{
       min-width:100%;
-      /* margin-top: 8px; */
       height: 100%;
       max-height: 30px;
       padding: 8px 11px;
       border: none;
       border-radius: 4px;
       font-size: 11px;
-      /* background-color: #f0f0f0; */
     }
 
     input:focus, textarea:focus {
@@ -66,29 +59,35 @@ const Content = styled.div`
       gap: 16px;
       align-self: end;
     }
-    .newPostFlags{
-      display: flex;
-      gap: 4px;
-      height: 16px;
-    }
   }
-  #createBtn{
-    align-self: flex-end;
-    border: none;
-    background: ${(props) => ((props.topic.length === 0 || props.content.length === 0)? `#cfdbff`: `#7695EC`)};
-    cursor: ${(props) => ((props.topic.length === 0 || props.content.length === 0)? `auto`: `pointer`)};
+
+  .newPostFlags{
+    display: flex;
+    gap: 4px;
+    height: 16px;
+  }
+
+  .input-with-autosuggest{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    >p{
+      display: ${(props) => (props.quantityflags === 3 ? 'none' : 'block')};
+      margin-left: 4px;
+      font-size: 8px;
+      color: #757575;
+    }
   }
 
   #postBtn{
     border: none;
     color: #FFF;
     background: ;
-    background: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.flags)? `#4F709C4a`: `#4F709C`)};
-    cursor: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.flags)? `auto`: `pointer`)};
+    background: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.quantityflags === 0) ? `#4F709C4a` : `#4F709C`)};
+    cursor: ${(props) => ((props.topic.length === 0 || props.content.length === 0 || props.quantityflags === 0) ? `auto` : `pointer`)};
   }
 
   #cancelBtn{
-    /* border: 1px solid #999999; */
     background-color: #fff;
     color: #000;
     cursor: pointer;
@@ -102,7 +101,6 @@ export const NewPost = (props) => {
     flags: []
   })
 
-  // const [flagName, setFlagName] = useState("")
   const [allFlags, setAllFlags] = useState([])
   const [selectedFlags, setSelectedFlags] = useState([])
 
@@ -112,19 +110,10 @@ export const NewPost = (props) => {
     }
   }
 
-  // const onChangeFlagName = (e) => {
-  //   setFlagName(e.target.value)
-  // }
-
   const handleClick = (e) => {
     e.preventDefault()
+    createPost()
 
-    if(e.nativeEvent.submitter.id === 'postBtn'){
-      createOrEditPost('post')
-    }else{
-      createOrEditPost('patch')
-      // dispatch(closeModal())
-    }
     props.closeModal()
   }
 
@@ -133,22 +122,14 @@ export const NewPost = (props) => {
     setForm({ ...form, [name]: value })
   }
 
-  // const {currentUser, clckedPostId} = useSelector((rootReducer) => rootReducer.reducer)
-
-  const createOrEditPost = async (req) => {
+  const createPost = async () => {
     try {
-      if(req === 'post'){
-        await axios.post(BASE_URL + '/posts', {
-          topic: form.topic,
-          content: form.content,
-          flags: selectedFlags
-        }, headers)
-      }else{
-        // await axios.patch(BASE_URL + clckedPostId + '/', {
-        //   topic: form.topic,
-        //   content: form.content
-        // })
-      }
+      await axios.post(BASE_URL + '/posts', {
+        topic: form.topic,
+        content: form.content,
+        flags: selectedFlags
+      }, headers)
+
       setForm({
         topic: "",
         content: ""
@@ -169,7 +150,7 @@ export const NewPost = (props) => {
   }
 
   const updateSelectedFlags = (item) => {
-    const newArray = selectedFlags.filter((flag)=>flag !== item)
+    const newArray = selectedFlags.filter((flag) => flag !== item)
     setSelectedFlags(newArray)
   }
 
@@ -179,41 +160,33 @@ export const NewPost = (props) => {
   }, []);
 
   return (
-    <Content topic={form.topic} content={form.content} flags={selectedFlags.length === 0}>
-      {/* <h2>What’s on your mind?</h2> */}
+    <Content topic={form.topic} content={form.content} quantityflags={selectedFlags.length}>
       <form onSubmit={handleClick}>
-        {/* <div> */}
-          {/* <p>topic</p> */}
-          <input placeholder='What do you want to post about?'
-            required
-            type="text"
-            name="topic"
-            value={form.topic}
-            onChange={onChangeForm}
-          />
-        {/* </div> */}
-        {/* <div> */}
-          {/* <p>Content</p> */}
-          <textarea placeholder='Tell us more details...' 
-            required
-            type="text"
-            name="content"
-            value={form.content}
-            onChange={onChangeForm}
-          />
-        {/* </div> */}
+        <input placeholder='What do you want to post about?'
+          required
+          type="text"
+          name="topic"
+          value={form.topic}
+          onChange={onChangeForm}
+        />
+        <textarea placeholder='Tell us more details...'
+          required
+          type="text"
+          name="content"
+          value={form.content}
+          onChange={onChangeForm}
+        />
         <div className='newPostFlags'>
-          {allFlags.filter((item)=>selectedFlags.includes(item.flag)).map((item)=> <Flag key={item.id} item={item} showX={true} onclickX={updateSelectedFlags}/>)}
+          {allFlags.filter((item) => selectedFlags.includes(item.name)).map((item) => <Flag key={item.name} item={item} showx={true.toString()} onclickX={updateSelectedFlags} />)}
         </div>
-        <InputWithAutosuggest suggestions={allFlags} setSelectedFlags={setSelectedFlags} selectedFlags={selectedFlags}/>
-        {props.component === 'toCreate'? 
-          <button id="createBtn" disabled={(form.topic.length === 0 || form.content.length === 0)? true : false}>Create</button>
-          :
-          <span>
+        <div className='input-with-autosuggest'>
+          <InputWithAutosuggest suggestions={allFlags} setSelectedFlags={setSelectedFlags} selectedFlags={selectedFlags} />
+          <p>Select up to 3 topics related to this post</p>
+        </div>
+        <span>
           <Btn id="cancelBtn" onClick={() => props.closeModal()}>Cancel</Btn>
-          <Btn id="postBtn" disabled={(form.topic.length === 0 || form.content.length === 0 || selectedFlags.length === 0)? true : false}>Post</Btn>
+          <Btn id="postBtn" disabled={(form.topic.length === 0 || form.content.length === 0 || selectedFlags.length === 0) ? true : false}>Post</Btn>
         </span>
-        }
       </form>
     </Content>
   )

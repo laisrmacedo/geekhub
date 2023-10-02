@@ -13,16 +13,13 @@ import { BASE_URL } from "../App";
 import { GlobalContext } from "../context/GlobalContext";
 import { Flag } from "./Flag";
 
-const Content = styled.div`
-  /* min-height: ${(props) => (props.length <= 35 ? '120px' : props.length > 200 ? '294px' : props.length + 82 + 'px')}; */
-  min-height: 200px;
+const Content = styled.div`min-height: 200px;
   width: 100%;
   border: 1px solid #E0E0E0;
   background-color: #FBFBFB;
   padding: 16px 12px;
   border-radius: 8px;
   display: flex;
-  /* flex-wrap: wrap; */
   align-items: start;
   flex-direction: column;
   justify-content: space-between;
@@ -148,7 +145,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
   const getFlags = async (headers) => {
     try {
       const response = await axios.get(BASE_URL + `/flags`, headers)
-      const cardFlags = response.data.filter((item)=> post.flags.includes(item.flag))
+      const cardFlags = response.data.filter((item)=> post.flags.includes(item.name))
       setFlags(cardFlags)
     } catch (error) {
       console.log(error.response.data)
@@ -196,7 +193,6 @@ export const DiscussionCard = ({post, isPost, path}) => {
     getTime()
     getUser(post.creatorNickname, headers)
     getFlags(headers)
-    // console.log(post.comments)
   }, [])
 
   return (
@@ -219,7 +215,7 @@ export const DiscussionCard = ({post, isPost, path}) => {
       <span className="flags">
         <h1>{post.topic.charAt(0).toUpperCase() + post.topic.slice(1)}</h1>
         <div>
-          {flags.map((item)=><Flag key={item.id} item={item} showX={false}/>)}
+          {flags.map((item)=><Flag key={item.name} item={item} showx={false.toString()}/>)}
         </div>
       </span>
       <p className="content">{post.content}</p>

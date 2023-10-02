@@ -12,16 +12,16 @@ const Content = styled.p`
   gap: 4px;
   align-items:center;
   span{
-    display: ${(props) => (props.showX? 'flex' : 'none')};
+    display: ${(props) => (props.showx? 'flex' : 'none')};
   }
   
 `
 
-export const Flag = ({item, showX, onclickX}) => {
+export const Flag = ({item, showx, onclickX}) => {
   return(
-    <Content color={item.color} showX={showX}>
-      {item.flag}
-      <span onClick={() => onclickX(item.flag)}>x</span>
+    <Content color={item.color} showx={showx === "true" ? true : false}>
+      {item.name}
+      <span onClick={() => onclickX(item.name)}>x</span>
     </Content>
   )
 }
