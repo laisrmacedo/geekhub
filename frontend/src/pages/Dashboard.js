@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { UserInfo } from '../components/UserInfo';
 import { Posts } from '../components/Posts';
 import { AsideFlags } from '../components/AllFlags';
+import { useContext, useState } from 'react';
+import { GlobalContext } from '../context/GlobalContext';
+import { Comments } from '../components/Comments';
 
 const Content = styled.div`
   height: calc(100% - 80px);
@@ -26,7 +29,10 @@ const Content = styled.div`
   }
 `
 
-export const Dashboard = () => {
+export const Dashboard = ({page}) => {
+  // const { dashboard, setDashboard } = useContext(GlobalContext)
+  const [clickedPost, setClickedPost] = useState(null)
+
   return(
     <Container>
       <Header></Header>
@@ -35,7 +41,7 @@ export const Dashboard = () => {
          <UserInfo/>
         </aside>
         <section>
-          <Posts/>
+          {page === 'posts'? <Posts setClickedPost={setClickedPost}/> : <Comments clickedPost={clickedPost}/>}
         </section>
         <aside>
           <AsideFlags/>

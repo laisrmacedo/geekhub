@@ -72,7 +72,7 @@ const Content = styled.div`
 export const UserInfo = () => {
   const navigate = useNavigate()
   const {user} = useParams()
-  const { currentUser, setCurrentUser } = useContext(GlobalContext)
+  const { loggedUser, setLoggedUser } = useContext(GlobalContext)
 
   const logout = () => {
     localStorage.setItem("token", "")
@@ -80,21 +80,20 @@ export const UserInfo = () => {
   }
 
   useEffect(()=>{
-    getUser(user, headers, setCurrentUser)
-    console.log(user)
+    getUser(user, headers, setLoggedUser)
   },[user])
 
   return (
     <Content>
       <figure>
-        <img src={currentUser?.avatar}/>
+        <img src={loggedUser?.avatar}/>
       </figure>
       <div className="user-id">
-        <h4 className="name">{currentUser?.nickname}</h4>
+        <h4 className="name">{loggedUser?.nickname}</h4>
         {/* <p className="nickname">@pessoa</p> */}
       </div>
       <div className="user-details">
-        <span>{currentUser?.email}</span>
+        <span>{loggedUser?.email}</span>
         {/* <span className="borderTopBottom">30 posts</span>
         <span>77 comments</span> */}
       </div>

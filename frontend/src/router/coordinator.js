@@ -10,4 +10,8 @@ export const goToDashboard = (navigate, user) => {
   navigate(`/${user}`)
 }
 
+export const goToDashboardComments = (navigate, user, postId) => {
+  navigate(`/${user}/${postId}`)
+}
+
 

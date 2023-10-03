@@ -64,7 +64,7 @@ const Content = styled.div`
 
 ReactModal.setAppElement('#root')
 
-export const Posts = () => {
+export const Posts = ({setClickedPost}) => {
   const navigate = useNavigate()
   const { allPosts, setAllPosts, clickedFlag, setClikedFlag } = useContext(GlobalContext)
   const [content, setContent] = useState("")
@@ -94,7 +94,7 @@ export const Posts = () => {
       goToLogin(navigate)
     } else {
       getPosts('/posts', headers, setAllPosts)
-      console.log(1, allPosts)
+      // console.log(1, allPosts)
     }
   }, [])
 
@@ -141,6 +141,7 @@ export const Posts = () => {
                 post={post}
                 path={'/posts'}
                 isPost={true}
+                // setClickedPost={setClickedPost}
               />
             )
           })

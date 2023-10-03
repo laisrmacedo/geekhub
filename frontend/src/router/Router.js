@@ -9,7 +9,8 @@ export const Router = () => {
       <Routes>
         <Route index element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
-        <Route path="/:user" element={<Dashboard/>}/>
+        <Route path="/:user" element={<Dashboard page={'posts'}/>}/>
+        <Route path="/:user/:postId" element={<Dashboard page={'comments'}/>}/>
       </Routes>
     </BrowserRouter>
   )
