@@ -55,4 +55,64 @@ export class BaseDatabase {
       console.error('Erro ao criar/verificar a tabela "Posts":', error);
     }
   }
+
+  public async createCommentsTable(): Promise<void> {
+    try {
+      const tableExists = await BaseDatabase.connection.schema.hasTable('comments');
+      
+      if (!tableExists) {
+        const filePath = path.join(__dirname, 'geekhub.sql'); 
+        const sql = fs.readFileSync(filePath, 'utf-8');
+        await BaseDatabase.connection.raw(sql);
+        console.log('Tabela "Comments" criada com sucesso.');
+      }
+    } catch (error) {
+      console.error('Erro ao criar/verificar a tabela "Posts":', error);
+    }
+  }
+
+  public async createPostVotesTable(): Promise<void> {
+    try {
+      const tableExists = await BaseDatabase.connection.schema.hasTable('post_upvote_downvote');
+      
+      if (!tableExists) {
+        const filePath = path.join(__dirname, 'geekhub.sql'); 
+        const sql = fs.readFileSync(filePath, 'utf-8');
+        await BaseDatabase.connection.raw(sql);
+        console.log('Tabela "post_upvote_downvote" criada com sucesso.');
+      }
+    } catch (error) {
+      console.error('Erro ao criar/verificar a tabela "post_upvote_downvote":', error);
+    }
+  }
+
+  public async createCommentVotesTable(): Promise<void> {
+    try {
+      const tableExists = await BaseDatabase.connection.schema.hasTable('comment_upvote_downvote');
+      
+      if (!tableExists) {
+        const filePath = path.join(__dirname, 'geekhub.sql'); 
+        const sql = fs.readFileSync(filePath, 'utf-8');
+        await BaseDatabase.connection.raw(sql);
+        console.log('Tabela "comment_upvote_downvote" criada com sucesso.');
+      }
+    } catch (error) {
+      console.error('Erro ao criar/verificar a tabela "comment_upvote_downvote":', error);
+    }
+  }
+
+  public async createFlagsTable(): Promise<void> {
+    try {
+      const tableExists = await BaseDatabase.connection.schema.hasTable('flags');
+      
+      if (!tableExists) {
+        const filePath = path.join(__dirname, 'geekhub.sql'); 
+        const sql = fs.readFileSync(filePath, 'utf-8');
+        await BaseDatabase.connection.raw(sql);
+        console.log('Tabela "flags" criada com sucesso.');
+      }
+    } catch (error) {
+      console.error('Erro ao criar/verificar a tabela "flags":', error);
+    }
+  }
 }

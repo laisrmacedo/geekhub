@@ -28,6 +28,12 @@ export class PostDatabase extends BaseDatabase {
   public static TABLE_USERS = "users"
 
   public async getPosts(q: string | undefined): Promise<PostDB[]> {
+    await this.createPostsTable()
+    await this.createPostVotesTable()
+    await this.createCommentsTable()
+    await this.createCommentVotesTable()
+    await this.createFlagsTable
+
     let postsDB
     if (q) {
       const result = await BaseDatabase
