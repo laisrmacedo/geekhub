@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width:180px;"/>
+  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width:250px;"/>
 </p>
 <h3 align="center">FULLSTACK PROJECT</h3>
 <br>
 
 ## 📝 Description
 
-GeekHub is a full stack project for a forum about technologies in the world of web development. There, users can create posts and interact through comments and votes. Users can also change nickname, password and avatar image, as well as delete their own posts and comments.
+GeekHub is a full stack project for a forum about technologies in the world of web development. There, users can create posts and interact through comments and votes. Users can also change nickname, password and avatar image, as well as delete their own posts and comments. Furthermore, one of the forum's features is to filter posts by selected topics.
 
 To this end, an API was developed for managing users, posts and interactions made on the GeekHub forum. It is an Express server back-end application with SQLite3 database, where there is data protection and code organization based on layered architecture concepts.
 
