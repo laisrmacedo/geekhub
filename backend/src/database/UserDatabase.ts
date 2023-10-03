@@ -15,7 +15,7 @@ export class UserDatabase extends BaseDatabase {
     public static TABLE_USERS = "users"
 
     public async getUsers(q: string | undefined): Promise<UserDB[]> {
-        await this.createUsersTable()
+        // await this.createUsersTable()
 
         let usersDB
         if (q) {

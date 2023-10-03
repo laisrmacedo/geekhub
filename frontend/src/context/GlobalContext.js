@@ -2,8 +2,8 @@ import axios from "axios";
 import { createContext } from "react";
 
 export const GlobalContext = createContext()
-// export const BASE_URL = 'http://localhost:3003'
-export const BASE_URL = 'https://geekhub-gxst.onrender.com'
+export const BASE_URL = 'http://localhost:3003'
+// export const BASE_URL = 'https://geekhub-gxst.onrender.com'
 
 export const headers = {
   headers: {
