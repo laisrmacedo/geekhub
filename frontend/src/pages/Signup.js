@@ -100,7 +100,7 @@ export const Signup = () => {
     try {
       const response = await axios.post(BASE_URL + `/users/signup`, body)
       localStorage.setItem("token", response.data.token)
-      goToDashboard(navigate)
+      goToDashboard(navigate, form.nickname)
     } catch (error) {
       console.log(error.response.data)
       setError(error.response.data)

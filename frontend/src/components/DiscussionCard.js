@@ -174,8 +174,6 @@ export const DiscussionCard = ({post, isPost, setClickedPost}) => {
     getTime()
     getUser(post && post.creatorNickname, headers, setPostCreator)
     getFlags(setFlags)
-
-    console.log(post)
     setFlags(flags.filter((item)=> post && post.flags.includes(item.name)))
   }, [])
 

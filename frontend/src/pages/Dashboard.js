@@ -4,9 +4,11 @@ import styled from "styled-components";
 import { UserInfo } from '../components/UserInfo';
 import { Posts } from '../components/Posts';
 import { AsideFlags } from '../components/AllFlags';
-import { useContext, useState } from 'react';
-import { GlobalContext } from '../context/GlobalContext';
+import { useContext, useEffect, useState } from 'react';
+import { BASE_URL, GlobalContext, headers } from '../context/GlobalContext';
 import { Comments } from '../components/Comments';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Content = styled.div`
   height: calc(100% - 80px);
@@ -30,8 +32,22 @@ const Content = styled.div`
 `
 
 export const Dashboard = ({page}) => {
-  // const { dashboard, setDashboard } = useContext(GlobalContext)
+  const { setLoggedUser } = useContext(GlobalContext)
   const [clickedPost, setClickedPost] = useState(null)
+  const { user } = useParams()
+
+  const getUser = async (user) => {
+    try {
+      const response = await axios.get(BASE_URL + `/users?q=${user}`, headers)
+      setLoggedUser(response.data[0])
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  useEffect(()=> {
+    getUser(user)
+  },[])
 
   return(
     <Container>
