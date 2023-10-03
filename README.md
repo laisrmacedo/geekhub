@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width:80px;"/>
+  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width:180px;"/>
 </p>
 <h3 align="center">FULLSTACK PROJECT</h3>
 <br>
