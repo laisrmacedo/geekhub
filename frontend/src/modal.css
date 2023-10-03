@@ -1,0 +1,24 @@
+.Modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.Overlay {
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(33, 53, 85, .2);
+  /* background-color: rgb(240, 240, 240, 0.5); */
+  backdrop-filter: blur(5px);
+}
