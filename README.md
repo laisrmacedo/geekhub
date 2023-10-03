@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width=80px"/>
+  <img src="https://github.com/laisrmacedo/geekhub/blob/main/frontend/src/assets/logo.png" style="width:80px;"/>
 </p>
 <h3 align="center">FULLSTACK PROJECT</h3>
 <br>
@@ -16,9 +16,19 @@ Frontend: [geekhub-laisrmacedo.vercel.app/](https://geekhub-laisrmacedo.vercel.a
 
 Backend: [geekhub-gxst.onrender.com](https://geekhub-gxst.onrender.com)
 
+## 🗂️ Database Tables
+
+![diagramas](./frontend/src/assets/geekhub-tables.png)
+[dbdiagram.io/d/geekhub_project-64038a44296d97641d856e92](https://dbdiagram.io/d/geekhub_project-64038a44296d97641d856e92)
+
+## 📜 Documentation
+
+To view the documentation, go to: </br>
+https://documenter.getpostman.com/view/24460805/2s9YJdUMCJ
+
 ## 🛠 Technologies
 
-### FRONTEND
+#### FRONTEND
 
 - React; 
 - Styled-Components; 
@@ -33,7 +43,7 @@ Backend: [geekhub-gxst.onrender.com](https://geekhub-gxst.onrender.com)
 - Frontend deploying on Surge.sh;
 - Backend deploying on Render.com.
 
-### BACKEND
+#### BACKEND
 
 - NodeJS;
 - Typescript;
